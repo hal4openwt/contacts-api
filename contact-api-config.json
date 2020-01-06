@@ -1,0 +1,10 @@
+{
+    "apiPackage":"fr.hildenbrand.api",
+    "modelPackage":"fr.hildenbrand.challenge.model",
+    "basePackage":"fr.hildenbrand",
+    "group-id":"fr.hildenbrand.challenge",
+    "artifactId":"challenge",
+    "artifactVersion":"0.0.1-SNAPSHOT",
+    "configPackage":"fr.hildenbrand.config",
+    "interfaceOnly": false
+}
