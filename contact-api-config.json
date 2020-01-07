@@ -1,10 +1,10 @@
 {
-    "apiPackage":"fr.hildenbrand.api",
-    "modelPackage":"fr.hildenbrand.challenge.model",
-    "basePackage":"fr.hildenbrand",
-    "group-id":"fr.hildenbrand.challenge",
-    "artifactId":"challenge",
+    "apiPackage":"fr.hildenbrand.contactapi.api",
+    "modelPackage":"fr.hildenbrand.contactapi.model",
+    "basePackage":"fr.hildenbrand.contactapi",
+    "group-id":"fr.hildenbrand.contactapi",
+    "artifactId":"contact-api",
     "artifactVersion":"0.0.1-SNAPSHOT",
-    "configPackage":"fr.hildenbrand.config",
+    "configPackage":"fr.hildenbrand.contactapi.config",
     "interfaceOnly": false
 }

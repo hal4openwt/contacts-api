@@ -6,10 +6,10 @@ info:
 host: "localhost:8080"
 basePath: "/api/v1"
 tags:
-- name: "contact"
+- name: "contacts"
   description: "Contacts"
-- name: "skill"
-  description: "Contact skills"
+- name: "skills"
+  description: "Contacts' skills"
 schemes:
 #- "https"
 - "http"
@@ -17,7 +17,7 @@ paths:
   /contacts:
     get:
       tags:
-      - "contact"
+      - "contacts"
       summary: "List contacts"
       description: ""
       operationId: "listContacts"
@@ -32,7 +32,7 @@ paths:
               $ref: '#/definitions/Contact'
     post:
       tags:
-      - "contact"
+      - "contacts"
       summary: "Add a contact"
       description: ""
       operationId: "addContact"
@@ -50,13 +50,9 @@ paths:
       responses:
         405:
           description: "Invalid input"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
     put:
       tags:
-      - "contact"
+      - "contacts"
       summary: "Update an existing contact"
       description: ""
       operationId: "updateContact"
@@ -78,14 +74,10 @@ paths:
           description: "Contact not found"
         405:
           description: "Validation exception"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
   /contacts/{contactId}:
     get:
       tags:
-      - "contact"
+      - "contacts"
       summary: "Find contact by ID"
       description: "Returns a single contact"
       operationId: "getContactById"
@@ -107,11 +99,9 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Contact not found"
-      # security:
-      # - api_key: []
     delete:
       tags:
-      - "contact"
+      - "contacts"
       summary: "Deletes a contact"
       description: ""
       operationId: "deleteContact"
@@ -133,17 +123,13 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Contact not found"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
   /contacts/{contactId}/addSkill:
     post:
       tags:
-      - "contact"
+      - "contacts"
       summary: "Adds a skill to a contact"
       description: ""
-      operationId: "addContactSkill"
+      operationId: "addSkillToContact"
       consumes:
       - "application/json"
       produces:
@@ -155,26 +141,20 @@ paths:
         required: true
         type: "integer"
         format: "int64"
-      - name: "skill"
+      - name: "skills"
         in: "body"
         description: "ID of skill to add"
         required: true
         schema:
-          $ref: "#/definitions/ContactSkill"
+          $ref: '#/definitions/Skill'
       responses:
         200:
           description: "Skill added to contact"
-          # schema:
-          #   $ref: "#/definitions/ModelApiResponse"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
   /skills:
     get:
       tags:
-      - "skill"
-      summary: "List skills"
+      - "skills"
+      summary: "List all skills"
       description: ""
       operationId: "listSkills"
       produces:
@@ -188,7 +168,7 @@ paths:
               $ref: '#/definitions/Skill'
     post:
       tags:
-      - "skill"
+      - "skills"
       summary: "Add a skill"
       description: ""
       operationId: "addSkill"
@@ -206,13 +186,9 @@ paths:
       responses:
         405:
           description: "Invalid input"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
     put:
       tags:
-      - "skill"
+      - "skills"
       summary: "Update an existing skill"
       description: ""
       operationId: "updateSkill"
@@ -234,14 +210,10 @@ paths:
           description: "Skill not found"
         405:
           description: "Validation exception"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
-  /skill/{skillId}:
+  /skills/{skillId}:
     get:
       tags:
-      - "skill"
+      - "skills"
       summary: "Find skill by ID"
       description: "Returns a single skill"
       operationId: "getSkillById"
@@ -263,21 +235,15 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Contact not found"
-      # security:
-      # - api_key: []
     delete:
       tags:
-      - "skill"
+      - "skills"
       summary: "Deletes a skill"
       description: ""
       operationId: "deleteSkill"
       produces:
       - "application/json"
       parameters:
-      # - name: "api_key"
-      #   in: "header"
-      #   required: false
-      #   type: "string"
       - name: "skillId"
         in: "path"
         description: "Skill ID to delete"
@@ -289,22 +255,6 @@ paths:
           description: "Invalid ID supplied"
         404:
           description: "Skill not found"
-      # security:
-      # - contact_auth:
-      #   - "write"
-      #   - "read"
-# securityDefinitions:
-#   contact_auth:
-#     type: "oauth2"
-#     authorizationUrl: "http://petstore.swagger.io/oauth/dialog"
-#     flow: "implicit"
-#     scopes:
-#       write: "modify pets in your account"
-#       read: "read your pets"
-#   api_key:
-#     type: "apiKey"
-#     name: "api_key"
-#     in: "header"
 definitions:
   Contact:
     type: "object"
@@ -327,19 +277,7 @@ definitions:
       skills:
         type: array
         items:
-          $ref: '#/definitions/ContactSkill'
-  ContactSkill:
-    type: "object"
-    properties:
-      skill:
-        $ref: '#/definitions/Skill'
-      level:
-        type: "string"
-        enum: 
-        - "very good"
-        - "good"
-        - "average"
-        - "poor"
+          $ref: '#/definitions/Skill'
   Skill:
     type: "object"
     properties:
@@ -348,13 +286,11 @@ definitions:
         format: "int64"
       name:
         type: "string"
-  # ModelApiResponse:
-  #   type: "object"
-  #   properties:
-  #     code:
-  #       type: "integer"
-  #       format: "int32"
-  #     type:
-  #       type: "string"
-  #     message:
-  #       type: "string"
+      level:
+        type: "string"
+        enum: 
+        - "very good"
+        - "good"
+        - "average"
+        - "poor"
+        
