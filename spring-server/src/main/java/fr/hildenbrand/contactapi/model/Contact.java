@@ -9,17 +9,28 @@ import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.validation.annotation.Validated;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * Contact
  */
+@Entity
 @Validated
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
 
 public class Contact   {
   @JsonProperty("id")
+  @Id
+  @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id = null;
 
   @JsonProperty("firstName")
@@ -42,6 +53,11 @@ public class Contact   {
 
   @JsonProperty("skills")
   @Valid
+  @ManyToMany
+  @JoinTable(
+		  name = "contacts_skills", 
+		  joinColumns = @JoinColumn(name = "contact_id"), 
+		  inverseJoinColumns = @JoinColumn(name = "skill_id"))
   private List<Skill> skills = null;
 
   public Contact id(Long id) {
