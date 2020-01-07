@@ -293,4 +293,8 @@ definitions:
         - "good"
         - "average"
         - "poor"
+      contacts:
+        type: array
+        items:
+          $ref: '#/definitions/Contact'
         

@@ -4,8 +4,11 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import fr.hildenbrand.contactapi.model.Contact;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.ArrayList;
+import java.util.List;
 import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
@@ -14,7 +17,7 @@ import javax.validation.constraints.*;
  * Skill
  */
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
 
 public class Skill   {
   @JsonProperty("id")
@@ -60,6 +63,10 @@ public class Skill   {
 
   @JsonProperty("level")
   private LevelEnum level = null;
+
+  @JsonProperty("contacts")
+  @Valid
+  private List<Contact> contacts = null;
 
   public Skill id(Long id) {
     this.id = id;
@@ -121,6 +128,35 @@ public class Skill   {
     this.level = level;
   }
 
+  public Skill contacts(List<Contact> contacts) {
+    this.contacts = contacts;
+    return this;
+  }
+
+  public Skill addContactsItem(Contact contactsItem) {
+    if (this.contacts == null) {
+      this.contacts = new ArrayList<Contact>();
+    }
+    this.contacts.add(contactsItem);
+    return this;
+  }
+
+  /**
+   * Get contacts
+   * @return contacts
+  **/
+  @ApiModelProperty(value = "")
+
+  @Valid
+
+  public List<Contact> getContacts() {
+    return contacts;
+  }
+
+  public void setContacts(List<Contact> contacts) {
+    this.contacts = contacts;
+  }
+
 
   @Override
   public boolean equals(java.lang.Object o) {
@@ -133,12 +169,13 @@ public class Skill   {
     Skill skill = (Skill) o;
     return Objects.equals(this.id, skill.id) &&
         Objects.equals(this.name, skill.name) &&
-        Objects.equals(this.level, skill.level);
+        Objects.equals(this.level, skill.level) &&
+        Objects.equals(this.contacts, skill.contacts);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, level);
+    return Objects.hash(id, name, level, contacts);
   }
 
   @Override
@@ -149,6 +186,7 @@ public class Skill   {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    level: ").append(toIndentedString(level)).append("\n");
+    sb.append("    contacts: ").append(toIndentedString(contacts)).append("\n");
     sb.append("}");
     return sb.toString();
   }

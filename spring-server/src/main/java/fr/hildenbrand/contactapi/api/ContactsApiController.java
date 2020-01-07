@@ -21,7 +21,7 @@ import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
 
 @Controller
 public class ContactsApiController implements ContactsApi {
@@ -57,7 +57,7 @@ public class ContactsApiController implements ContactsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<Contact>(objectMapper.readValue("{  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"}", Contact.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<Contact>(objectMapper.readValue("{  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"}", Contact.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<Contact>(HttpStatus.INTERNAL_SERVER_ERROR);
@@ -71,7 +71,7 @@ public class ContactsApiController implements ContactsApi {
         String accept = request.getHeader("Accept");
         if (accept != null && accept.contains("application/json")) {
             try {
-                return new ResponseEntity<List<Contact>>(objectMapper.readValue("[ {  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"}, {  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
+                return new ResponseEntity<List<Contact>>(objectMapper.readValue("[ {  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"}, {  \"skills\" : [ {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  }, {    \"level\" : \"very good\",    \"name\" : \"name\",    \"id\" : 6,    \"contacts\" : [ null, null ]  } ],  \"firstName\" : \"firstName\",  \"lastName\" : \"lastName\",  \"mobilePhoneNumber\" : \"mobilePhoneNumber\",  \"address\" : \"address\",  \"fullName\" : \"fullName\",  \"id\" : 0,  \"email\" : \"email\"} ]", List.class), HttpStatus.NOT_IMPLEMENTED);
             } catch (IOException e) {
                 log.error("Couldn't serialize response for content type application/json", e);
                 return new ResponseEntity<List<Contact>>(HttpStatus.INTERNAL_SERVER_ERROR);
