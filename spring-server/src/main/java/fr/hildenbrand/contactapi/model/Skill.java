@@ -4,6 +4,7 @@ import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
+import fr.hildenbrand.contactapi.model.Contact;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -23,7 +25,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T14:46:51.231+01:00")
 
 public class Skill   {
   @JsonProperty("id")
@@ -72,7 +74,7 @@ public class Skill   {
   @JsonProperty("level")
   private LevelEnum level = null;
 
-  @JsonProperty("contacts")
+  //@JsonProperty("contacts")
   @Valid
   @ManyToMany(mappedBy = "skills")
   private List<Contact> contacts = null;
@@ -106,7 +108,8 @@ public class Skill   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getName() {
@@ -126,7 +129,8 @@ public class Skill   {
    * Get level
    * @return level
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public LevelEnum getLevel() {
@@ -154,12 +158,18 @@ public class Skill   {
    * Get contacts
    * @return contacts
   **/
-  @ApiModelProperty(value = "")
+  @Transient
+  private final List<Skill> emptySkillList = new ArrayList<>();
+  
+  @ApiModelProperty(example = "[]", value = "")
 
   @Valid
 
   public List<Contact> getContacts() {
-    return contacts;
+	  // Strip skills from contact list to avoid json infinite recursion
+	  for (Contact contact: contacts)
+		  contact.setSkills(emptySkillList);
+	  return contacts;
   }
 
   public void setContacts(List<Contact> contacts) {

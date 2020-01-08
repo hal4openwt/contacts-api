@@ -55,7 +55,7 @@ public interface SkillsApi {
     @RequestMapping(value = "/skills/{skillId}",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    ResponseEntity<Contact> getSkillById(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId);
+    ResponseEntity<Skill> getSkillById(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId);
 
 
     @ApiOperation(value = "List all skills", nickname = "listSkills", notes = "", response = Skill.class, responseContainer = "List", tags={ "skills", })

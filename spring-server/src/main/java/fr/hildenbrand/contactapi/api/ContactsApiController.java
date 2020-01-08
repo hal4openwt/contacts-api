@@ -1,6 +1,9 @@
 package fr.hildenbrand.contactapi.api;
 
 import fr.hildenbrand.contactapi.dbaccess.ContactRepository;
+//import fr.hildenbrand.contactapi.dbaccess.ContactSkill;
+//import fr.hildenbrand.contactapi.dbaccess.ContactSkillRepository;
+import fr.hildenbrand.contactapi.dbaccess.SkillRepository;
 import fr.hildenbrand.contactapi.model.Contact;
 import fr.hildenbrand.contactapi.model.Skill;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -21,6 +24,8 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.constraints.*;
 import javax.validation.Valid;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
+
 import java.io.IOException;
 import java.util.List;
 @javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
@@ -31,7 +36,10 @@ public class ContactsApiController implements ContactsApi {
 	@Autowired
 	ContactRepository contactRepository;
 	
-    private static final Logger log = LoggerFactory.getLogger(ContactsApiController.class);
+	@Autowired
+	SkillRepository skillRepository;
+	
+	private static final Logger log = LoggerFactory.getLogger(ContactsApiController.class);
 
     private final ObjectMapper objectMapper;
 
@@ -44,29 +52,59 @@ public class ContactsApiController implements ContactsApi {
     }
 
     public ResponseEntity<Void> addContact(@ApiParam(value = "Contact object that needs to be added" ,required=true )  @Valid @RequestBody Contact body) {
-        String accept = request.getHeader("Accept");
         try {
-        	// Reset ID
         	body.setId(null);
         	contactRepository.save(body);
         	return new ResponseEntity<Void>(HttpStatus.CREATED);
-        } catch (Exception e) {
-            log.error("Couldn't serialize response for content type application/json", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+        } 
+        catch(Exception e) {
+    		log.error("Server exception: ", e);
+    		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
-    public ResponseEntity<Void> addSkillToContact(@ApiParam(value = "ID of contact to update",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "ID of skill to add" ,required=true )  @Valid @RequestBody Skill skills) {
-        String accept = request.getHeader("Accept");
-        return new ResponseEntity<Void>(HttpStatus.NOT_IMPLEMENTED);
+    @Transactional
+    public ResponseEntity<Void> addSkillToContact(@ApiParam(value = "ID of contact to update",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "ID of skill to add" ,required=true )  @Valid @RequestBody Skill skill) {
+    	try {
+	        Skill skillInDB = skillRepository.findOne(skill.getId());
+	        if (skillInDB==null) {
+	        	return new ResponseEntity<Void>(HttpStatus.UNPROCESSABLE_ENTITY);
+	        }
+	        
+	        Contact contactInDB = contactRepository.findOne(contactId);
+	        if (contactInDB==null) {
+	        	return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);	
+	        }
+	        
+	        contactInDB.getSkills().add(skillInDB);
+	        contactRepository.save(contactInDB);
+	        
+	//        ContactSkill contactSkill = new ContactSkill();
+	//        contactSkill.setContactId(contactId);
+	//        contactSkill.setSkillId(skill.getId());
+	//        contactSkillRepository.save(contactSkill);
+	        
+	        return new ResponseEntity<Void>(HttpStatus.OK);
+    	} 
+    	catch(Exception e) {
+    		log.error("Server exception: ", e);
+    		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
+    @Transactional
     public ResponseEntity<Void> deleteContact(@ApiParam(value = "Contact id to delete",required=true) @PathVariable("contactId") Long contactId) {
     	try {
-        	contactRepository.delete(contactId);
-        	return new ResponseEntity<Void>(HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Couldn't serialize response for content type application/json", e);
+    		Contact contact=contactRepository.findOne(contactId);
+    		if (contact==null)
+    			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    		else {
+    			contactRepository.delete(contactId);
+    			return new ResponseEntity<Void>(HttpStatus.OK);
+    		}
+        } 
+    	catch (Exception e) {
+            log.error("Server exception: ", e);
             return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
@@ -78,29 +116,38 @@ public class ContactsApiController implements ContactsApi {
     			return new ResponseEntity<Contact>(HttpStatus.NOT_FOUND);
     		else
     			return new ResponseEntity<Contact>(contact,HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Couldn't serialize response for content type application/json", e);
-            return new ResponseEntity<Contact>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    	} 
+    	catch(Exception e) {
+    		log.error("Server exception: ", e);
+    		return new ResponseEntity<Contact>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
     public ResponseEntity<List<Contact>> listContacts() {
     	try {
         	return new ResponseEntity<List<Contact>>((List<Contact>)contactRepository.findAll(),HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Couldn't serialize response for content type application/json", e);
-            return new ResponseEntity<List<Contact>>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    	} 
+    	catch(Exception e) {
+    		log.error("Server exception: ", e);
+    		return new ResponseEntity<List<Contact>>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
+    @Transactional
     public ResponseEntity<Void> updateContact(@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body) {
     	try {
-        	contactRepository.save(body);
-        	return new ResponseEntity<Void>(HttpStatus.OK);
-        } catch (Exception e) {
-            log.error("Couldn't serialize response for content type application/json", e);
-            return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
-        }
+    		Contact contact=contactRepository.findOne(body.getId());
+    		if (contact==null)
+    			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+    		else {
+    			contactRepository.save(body);
+    			return new ResponseEntity<Void>(HttpStatus.OK);
+    		}
+    	} 
+    	catch(Exception e) {
+    		log.error("Server exception: ", e);
+    		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);
+    	}
     }
 
 }

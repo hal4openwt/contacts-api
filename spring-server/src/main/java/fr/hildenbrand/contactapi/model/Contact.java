@@ -17,6 +17,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
@@ -89,7 +90,8 @@ public class Contact   {
    * Get firstName
    * @return firstName
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getFirstName() {
@@ -109,7 +111,8 @@ public class Contact   {
    * Get lastName
    * @return lastName
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getLastName() {
@@ -129,7 +132,8 @@ public class Contact   {
    * Get fullName
    * @return fullName
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getFullName() {
@@ -149,7 +153,8 @@ public class Contact   {
    * Get address
    * @return address
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getAddress() {
@@ -169,7 +174,8 @@ public class Contact   {
    * Get email
    * @return email
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
 
   public String getEmail() {
@@ -189,9 +195,10 @@ public class Contact   {
    * Get mobilePhoneNumber
    * @return mobilePhoneNumber
   **/
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(required = true, value = "")
+  @NotNull
 
-
+@Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$") 
   public String getMobilePhoneNumber() {
     return mobilePhoneNumber;
   }
@@ -217,12 +224,18 @@ public class Contact   {
    * Get skills
    * @return skills
   **/
-  @ApiModelProperty(value = "")
+  @Transient
+  private final List<Contact> emptyContactList = new ArrayList<>();
+  
+  @ApiModelProperty(example = "[]", value = "")
 
   @Valid
 
   public List<Skill> getSkills() {
-    return skills;
+	  for (Skill skill: skills) {
+		  skill.setContacts(emptyContactList);
+	  }
+	  return skills;
   }
 
   public void setSkills(List<Skill> skills) {
