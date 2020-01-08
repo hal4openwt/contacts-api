@@ -9,6 +9,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
+
+import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
 
 import javax.persistence.Entity;
@@ -110,7 +112,7 @@ public class Skill   {
   **/
   @ApiModelProperty(example = "C++", required = true, value = "")
   @NotNull
-
+  @NotBlank
 
   public String getName() {
     return name;
