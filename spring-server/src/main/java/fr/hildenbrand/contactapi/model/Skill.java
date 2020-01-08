@@ -74,7 +74,7 @@ public class Skill   {
   @JsonProperty("level")
   private LevelEnum level = null;
 
-  //@JsonProperty("contacts")
+  @JsonProperty("contacts")
   @Valid
   @ManyToMany(mappedBy = "skills")
   private List<Contact> contacts = null;
@@ -159,16 +159,17 @@ public class Skill   {
    * @return contacts
   **/
   @Transient
-  private final List<Skill> emptySkillList = new ArrayList<>();
+  private static final List<Skill> emptySkillList = new ArrayList<>();
   
   @ApiModelProperty(example = "[]", value = "")
 
   @Valid
 
   public List<Contact> getContacts() {
-	  // Strip skills from contact list to avoid json infinite recursion
-	  for (Contact contact: contacts)
-		  contact.setSkills(emptySkillList);
+	  if (contacts!=null) {
+		  for (Contact contact: contacts)
+			  contact.setSkills(emptySkillList);
+	  }
 	  return contacts;
   }
 

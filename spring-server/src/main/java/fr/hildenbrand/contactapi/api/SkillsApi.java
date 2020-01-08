@@ -5,7 +5,6 @@
  */
 package fr.hildenbrand.contactapi.api;
 
-import fr.hildenbrand.contactapi.model.Contact;
 import fr.hildenbrand.contactapi.model.Skill;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
@@ -22,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T10:15:01.803+01:00")
 
 @Api(value = "skills", description = "the skills API")
 public interface SkillsApi {
@@ -47,9 +46,9 @@ public interface SkillsApi {
     ResponseEntity<Void> deleteSkill(@ApiParam(value = "Skill ID to delete",required=true) @PathVariable("skillId") Long skillId);
 
 
-    @ApiOperation(value = "Find skill by ID", nickname = "getSkillById", notes = "Returns a single skill", response = Contact.class, tags={ "skills", })
+    @ApiOperation(value = "Find skill by ID", nickname = "getSkillById", notes = "Returns a single skill", response = Skill.class, tags={ "skills", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "successful operation", response = Contact.class),
+        @ApiResponse(code = 200, message = "successful operation", response = Skill.class),
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Contact not found") })
     @RequestMapping(value = "/skills/{skillId}",

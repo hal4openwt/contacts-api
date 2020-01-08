@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T10:15:01.803+01:00")
 
 @Api(value = "contacts", description = "the contacts API")
 public interface ContactsApi {
@@ -39,7 +39,8 @@ public interface ContactsApi {
 
     @ApiOperation(value = "Adds a skill to a contact", nickname = "addSkillToContact", notes = "", tags={ "contacts", })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Skill added to contact") })
+        @ApiResponse(code = 200, message = "Skill added to contact"),
+        @ApiResponse(code = 422, message = "Skill ID not found") })
     @RequestMapping(value = "/contacts/{contactId}/addSkill",
         produces = { "application/json" }, 
         consumes = { "application/json" },

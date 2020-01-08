@@ -197,8 +197,7 @@ public class Contact   {
   **/
   @ApiModelProperty(required = true, value = "")
   @NotNull
-
-@Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$") 
+  @Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$",message = "Phone number must start with 00 and can only contain digits, space, \".\" and \"-\".") 
   public String getMobilePhoneNumber() {
     return mobilePhoneNumber;
   }
@@ -225,15 +224,17 @@ public class Contact   {
    * @return skills
   **/
   @Transient
-  private final List<Contact> emptyContactList = new ArrayList<>();
+  private static final List<Contact> emptyContactList = new ArrayList<>();
   
   @ApiModelProperty(example = "[]", value = "")
 
   @Valid
 
   public List<Skill> getSkills() {
-	  for (Skill skill: skills) {
-		  skill.setContacts(emptyContactList);
+	  if (skills!=null) {
+		  for (Skill skill: skills) {
+			  skill.setContacts(emptyContactList);
+		  }
 	  }
 	  return skills;
   }
