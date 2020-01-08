@@ -1,3 +1,4 @@
+# OpenWT Challenge
 ## Description
 The root project was generated with the [Swagger Codegen CLI](https://github.com/swagger-api/swagger-codegen) module using a yaml OpenAPI description of the API. 
 
@@ -32,7 +33,7 @@ java -jar target/contact-api-0.0.1-SNAPSHOT.jar
 ```
 ## Connect to the API and the DB
 
-* The API **swagger UI** is accessible at http://localhost:8080/api/v1/
+* The API's **swagger UI** is accessible at http://localhost:8080/api/v1/
 * The **DB** can be explored using [Adminer](https://www.adminer.org/) at http://localhost:8081/
 	* **System**: PostgreSQL
 	* **Server**: db
