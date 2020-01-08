@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T12:44:06.373+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T15:30:38.413+01:00")
 
 @Api(value = "skills", description = "the skills API")
 public interface SkillsApi {
@@ -40,7 +40,8 @@ public interface SkillsApi {
     @ApiOperation(value = "Deletes a skill", nickname = "deleteSkill", notes = "", tags={ "skills", })
     @ApiResponses(value = { 
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
-        @ApiResponse(code = 404, message = "Skill not found") })
+        @ApiResponse(code = 404, message = "Skill not found"),
+        @ApiResponse(code = 428, message = "Remove this skill in all contacts first") })
     @RequestMapping(value = "/skills/{skillId}",
         produces = { "application/json" }, 
         method = RequestMethod.DELETE)
