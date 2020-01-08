@@ -22,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T10:15:01.803+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
 
 @Api(value = "contacts", description = "the contacts API")
 public interface ContactsApi {
@@ -83,10 +83,10 @@ public interface ContactsApi {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Contact not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/contacts",
+    @RequestMapping(value = "/contacts/{contactId}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateContact(@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body);
+    ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body);
 
 }

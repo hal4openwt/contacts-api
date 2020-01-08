@@ -25,7 +25,7 @@ import javax.transaction.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
 
 @Controller
 public class SkillsApiController implements SkillsApi {
@@ -101,12 +101,13 @@ public class SkillsApiController implements SkillsApi {
     }
 
     @Transactional
-    public ResponseEntity<Void> updateSkill(@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body) {
+    public ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body) {
     	try {
-        	Skill skill = skillRepository.findOne(body.getId());
+        	Skill skill = skillRepository.findOne(skillId);
         	if (skill==null)
         		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         	else {
+        		body.setId(skillId);
         		skillRepository.save(body);
         		return new ResponseEntity<Void>(HttpStatus.OK);
         	}

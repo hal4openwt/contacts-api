@@ -21,7 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T10:15:01.803+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
 
 @Api(value = "skills", description = "the skills API")
 public interface SkillsApi {
@@ -71,10 +71,10 @@ public interface SkillsApi {
         @ApiResponse(code = 400, message = "Invalid ID supplied"),
         @ApiResponse(code = 404, message = "Skill not found"),
         @ApiResponse(code = 405, message = "Validation exception") })
-    @RequestMapping(value = "/skills",
+    @RequestMapping(value = "/skills/{skillId}",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateSkill(@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body);
+    ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body);
 
 }

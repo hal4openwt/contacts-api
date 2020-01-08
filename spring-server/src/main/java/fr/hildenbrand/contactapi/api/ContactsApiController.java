@@ -1,8 +1,6 @@
 package fr.hildenbrand.contactapi.api;
 
 import fr.hildenbrand.contactapi.dbaccess.ContactRepository;
-//import fr.hildenbrand.contactapi.dbaccess.ContactSkill;
-//import fr.hildenbrand.contactapi.dbaccess.ContactSkillRepository;
 import fr.hildenbrand.contactapi.dbaccess.SkillRepository;
 import fr.hildenbrand.contactapi.model.Contact;
 import fr.hildenbrand.contactapi.model.Skill;
@@ -28,7 +26,7 @@ import javax.transaction.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:32:32.509+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
 
 @Controller
 public class ContactsApiController implements ContactsApi {
@@ -78,11 +76,6 @@ public class ContactsApiController implements ContactsApi {
 	        
 	        contactInDB.getSkills().add(skillInDB);
 	        contactRepository.save(contactInDB);
-	        
-	//        ContactSkill contactSkill = new ContactSkill();
-	//        contactSkill.setContactId(contactId);
-	//        contactSkill.setSkillId(skill.getId());
-	//        contactSkillRepository.save(contactSkill);
 	        
 	        return new ResponseEntity<Void>(HttpStatus.OK);
     	} 
@@ -134,9 +127,9 @@ public class ContactsApiController implements ContactsApi {
     }
 
     @Transactional
-    public ResponseEntity<Void> updateContact(@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body) {
+    public ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body) {
     	try {
-    		Contact contact=contactRepository.findOne(body.getId());
+    		Contact contact=contactRepository.findOne(contactId);
     		if (contact==null)
     			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     		else {
