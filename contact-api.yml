@@ -279,22 +279,29 @@ definitions:
         format: "int64"
       firstName:
         type: "string"
+        example: "John"
       lastName:
         type: "string"
+        example: "Doe"
       fullName:
         type: "string"
+        example: "John Doe"
       address:
         type: "string"
+        example: "London, UK"
       email:
         type: "string"
         format: "email"
+        example: "j.doe@somewhere.com"
       mobilePhoneNumber:
         type: "string"
         pattern: '^(\+|00)[\d\-\.\/ ]+$'
+        example: "+44 5247856-84"
       skills:
         type: array
         items:
-          $ref: '#/definitions/Skill'  
+          $ref: '#/definitions/Skill'
+        example: []
     required:
     - firstName
     - lastName
@@ -302,14 +309,6 @@ definitions:
     - address
     - email
     - mobilePhoneNumber
-    example:
-      id: 1
-      firstName: 'John'
-      lastName: 'Doe'
-      fullName: 'John Doe'
-      address: 'London'
-      email: 'john.doe@example.com'
-      mobilePhoneNumber: '+44 7123456789'
   Skill:
     type: "object"
     properties:
@@ -318,6 +317,7 @@ definitions:
         format: "int64"
       name:
         type: "string"
+        example: "C++"
       level:
         type: "string"
         enum: 
@@ -325,14 +325,12 @@ definitions:
         - "good"
         - "average"
         - "poor"
+        example: "very good"
       contacts:
         type: array
         items:
           $ref: '#/definitions/Contact'
+        example: []
     required:
     - name
     - level
-    example:
-      name: 'C++'
-      level: 'good'
-          

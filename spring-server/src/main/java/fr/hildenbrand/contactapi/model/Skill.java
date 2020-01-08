@@ -25,7 +25,7 @@ import javax.validation.constraints.*;
  */
 @Entity
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T14:46:51.231+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:47:40.137+01:00")
 
 public class Skill   {
   @JsonProperty("id")
@@ -108,7 +108,7 @@ public class Skill   {
    * Get name
    * @return name
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "C++", required = true, value = "")
   @NotNull
 
 
@@ -129,7 +129,7 @@ public class Skill   {
    * Get level
    * @return level
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "very good", required = true, value = "")
   @NotNull
 
 

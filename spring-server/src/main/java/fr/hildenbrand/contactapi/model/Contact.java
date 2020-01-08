@@ -90,7 +90,7 @@ public class Contact   {
    * Get firstName
    * @return firstName
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "John", required = true, value = "")
   @NotNull
 
 
@@ -111,7 +111,7 @@ public class Contact   {
    * Get lastName
    * @return lastName
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "Doe", required = true, value = "")
   @NotNull
 
 
@@ -132,7 +132,7 @@ public class Contact   {
    * Get fullName
    * @return fullName
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "John Doe", required = true, value = "")
   @NotNull
 
 
@@ -153,7 +153,7 @@ public class Contact   {
    * Get address
    * @return address
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "London, UK", required = true, value = "")
   @NotNull
 
 
@@ -174,7 +174,7 @@ public class Contact   {
    * Get email
    * @return email
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "j.doe@somewhere.com", required = true, value = "")
   @NotNull
 
 
@@ -195,7 +195,7 @@ public class Contact   {
    * Get mobilePhoneNumber
    * @return mobilePhoneNumber
   **/
-  @ApiModelProperty(required = true, value = "")
+  @ApiModelProperty(example = "+44 5247856-84", required = true, value = "")
   @NotNull
   @Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$",message = "Phone number must start with 00 and can only contain digits, space, \".\" and \"-\".") 
   public String getMobilePhoneNumber() {
