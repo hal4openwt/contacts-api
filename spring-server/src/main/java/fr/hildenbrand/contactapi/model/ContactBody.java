@@ -3,39 +3,21 @@ package fr.hildenbrand.contactapi.model;
 import java.util.Objects;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import fr.hildenbrand.contactapi.model.Skill;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.ArrayList;
-import java.util.List;
 
 import org.hibernate.validator.constraints.NotBlank;
 import org.springframework.validation.annotation.Validated;
-
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Contact
+ * ContactBody
  */
-@Entity
 @Validated
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-07T11:22:56.790+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T12:44:06.373+01:00")
 
-public class Contact   {
-  @JsonProperty("id")
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id = null;
-
+public class ContactBody   {
   @JsonProperty("firstName")
   private String firstName = null;
 
@@ -54,45 +36,7 @@ public class Contact   {
   @JsonProperty("mobilePhoneNumber")
   private String mobilePhoneNumber = null;
 
-  @JsonProperty("skills")
-  @Valid
-  @ManyToMany
-  @JoinTable(
-		  name = "contacts_skills", 
-		  joinColumns = @JoinColumn(name = "contact_id"), 
-		  inverseJoinColumns = @JoinColumn(name = "skill_id"))
-  private List<Skill> skills = null;
-
-  public Contact id(Long id) {
-    this.id = id;
-    return this;
-  }
-  
-  public void copyBody(ContactBody contactBody) {
-	  this.setFirstName(contactBody.getFirstName());
-	  this.lastName(contactBody.getLastName());
-	  this.fullName(contactBody.getFullName());
-	  this.address(contactBody.getAddress());
-	  this.email(contactBody.getEmail());
-	  this.mobilePhoneNumber(contactBody.getMobilePhoneNumber());
-  }
-
-  /**
-   * Get id
-   * @return id
-  **/
-  @ApiModelProperty(value = "")
-
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public Contact firstName(String firstName) {
+  public ContactBody firstName(String firstName) {
     this.firstName = firstName;
     return this;
   }
@@ -103,8 +47,8 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "John", required = true, value = "")
   @NotNull
-  @NotBlank
-
+  @NotBlank(message="First name is required")
+  
   public String getFirstName() {
     return firstName;
   }
@@ -113,7 +57,7 @@ public class Contact   {
     this.firstName = firstName;
   }
 
-  public Contact lastName(String lastName) {
+  public ContactBody lastName(String lastName) {
     this.lastName = lastName;
     return this;
   }
@@ -124,7 +68,8 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "Doe", required = true, value = "")
   @NotNull
-  @NotBlank
+  @NotBlank(message="Last name is required")
+
 
   public String getLastName() {
     return lastName;
@@ -134,7 +79,7 @@ public class Contact   {
     this.lastName = lastName;
   }
 
-  public Contact fullName(String fullName) {
+  public ContactBody fullName(String fullName) {
     this.fullName = fullName;
     return this;
   }
@@ -145,7 +90,8 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "John Doe", required = true, value = "")
   @NotNull
-  @NotBlank
+  @NotBlank(message="Full name is required")
+
 
   public String getFullName() {
     return fullName;
@@ -155,7 +101,7 @@ public class Contact   {
     this.fullName = fullName;
   }
 
-  public Contact address(String address) {
+  public ContactBody address(String address) {
     this.address = address;
     return this;
   }
@@ -166,7 +112,8 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "London, UK", required = true, value = "")
   @NotNull
-  @NotBlank
+  @NotBlank(message="Address is required")
+
 
   public String getAddress() {
     return address;
@@ -176,7 +123,7 @@ public class Contact   {
     this.address = address;
   }
 
-  public Contact email(String email) {
+  public ContactBody email(String email) {
     this.email = email;
     return this;
   }
@@ -187,7 +134,8 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "j.doe@somewhere.com", required = true, value = "")
   @NotNull
-  @NotBlank
+  @NotBlank(message="Email address is required")
+
 
   public String getEmail() {
     return email;
@@ -197,7 +145,7 @@ public class Contact   {
     this.email = email;
   }
 
-  public Contact mobilePhoneNumber(String mobilePhoneNumber) {
+  public ContactBody mobilePhoneNumber(String mobilePhoneNumber) {
     this.mobilePhoneNumber = mobilePhoneNumber;
     return this;
   }
@@ -208,50 +156,15 @@ public class Contact   {
   **/
   @ApiModelProperty(example = "+44 5247856-84", required = true, value = "")
   @NotNull
-  @Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$",message = "Phone number must start with 00 and can only contain digits, space, \".\" and \"-\".") 
+  @NotBlank(message="Mobile phone number is required")
+
+@Pattern(regexp="^(\\+|00)[\\d\\-\\./ ]+$") 
   public String getMobilePhoneNumber() {
     return mobilePhoneNumber;
   }
 
   public void setMobilePhoneNumber(String mobilePhoneNumber) {
     this.mobilePhoneNumber = mobilePhoneNumber;
-  }
-
-  public Contact skills(List<Skill> skills) {
-    this.skills = skills;
-    return this;
-  }
-
-  public Contact addSkillsItem(Skill skillsItem) {
-    if (this.skills == null) {
-      this.skills = new ArrayList<Skill>();
-    }
-    this.skills.add(skillsItem);
-    return this;
-  }
-
-  /**
-   * Get skills
-   * @return skills
-  **/
-  @Transient
-  public static final List<Contact> emptyContactList = new ArrayList<>();
-  
-  @ApiModelProperty(example = "[]", value = "")
-
-  @Valid
-
-  public List<Skill> getSkills() {
-	  if (skills!=null) {
-		  for (Skill skill: skills) {
-			  skill.setContacts(emptyContactList);
-		  }
-	  }
-	  return skills;
-  }
-
-  public void setSkills(List<Skill> skills) {
-    this.skills = skills;
   }
 
 
@@ -263,35 +176,31 @@ public class Contact   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Contact contact = (Contact) o;
-    return Objects.equals(this.id, contact.id) &&
-        Objects.equals(this.firstName, contact.firstName) &&
-        Objects.equals(this.lastName, contact.lastName) &&
-        Objects.equals(this.fullName, contact.fullName) &&
-        Objects.equals(this.address, contact.address) &&
-        Objects.equals(this.email, contact.email) &&
-        Objects.equals(this.mobilePhoneNumber, contact.mobilePhoneNumber) &&
-        Objects.equals(this.skills, contact.skills);
+    ContactBody contactBody = (ContactBody) o;
+    return Objects.equals(this.firstName, contactBody.firstName) &&
+        Objects.equals(this.lastName, contactBody.lastName) &&
+        Objects.equals(this.fullName, contactBody.fullName) &&
+        Objects.equals(this.address, contactBody.address) &&
+        Objects.equals(this.email, contactBody.email) &&
+        Objects.equals(this.mobilePhoneNumber, contactBody.mobilePhoneNumber);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, firstName, lastName, fullName, address, email, mobilePhoneNumber, skills);
+    return Objects.hash(firstName, lastName, fullName, address, email, mobilePhoneNumber);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Contact {\n");
+    sb.append("class ContactBody {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    firstName: ").append(toIndentedString(firstName)).append("\n");
     sb.append("    lastName: ").append(toIndentedString(lastName)).append("\n");
     sb.append("    fullName: ").append(toIndentedString(fullName)).append("\n");
     sb.append("    address: ").append(toIndentedString(address)).append("\n");
     sb.append("    email: ").append(toIndentedString(email)).append("\n");
     sb.append("    mobilePhoneNumber: ").append(toIndentedString(mobilePhoneNumber)).append("\n");
-    sb.append("    skills: ").append(toIndentedString(skills)).append("\n");
     sb.append("}");
     return sb.toString();
   }

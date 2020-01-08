@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 import fr.hildenbrand.contactapi.model.Contact;
+import fr.hildenbrand.contactapi.model.SkillBody.LevelEnum;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
@@ -37,41 +38,6 @@ public class Skill   {
 
   @JsonProperty("name")
   private String name = null;
-
-  /**
-   * Gets or Sets level
-   */
-  public enum LevelEnum {
-    VERY_GOOD("very good"),
-    
-    GOOD("good"),
-    
-    AVERAGE("average"),
-    
-    POOR("poor");
-
-    private String value;
-
-    LevelEnum(String value) {
-      this.value = value;
-    }
-
-    @Override
-    @JsonValue
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    @JsonCreator
-    public static LevelEnum fromValue(String text) {
-      for (LevelEnum b : LevelEnum.values()) {
-        if (String.valueOf(b.value).equals(text)) {
-          return b;
-        }
-      }
-      return null;
-    }
-  }
 
   @JsonProperty("level")
   private LevelEnum level = null;
@@ -161,7 +127,7 @@ public class Skill   {
    * @return contacts
   **/
   @Transient
-  private static final List<Skill> emptySkillList = new ArrayList<>();
+  public static final List<Skill> emptySkillList = new ArrayList<>();
   
   @ApiModelProperty(example = "[]", value = "")
 
@@ -222,6 +188,11 @@ public class Skill   {
       return "null";
     }
     return o.toString().replace("\n", "\n    ");
+  }
+
+  public void copyBody(SkillBody body) {
+	this.setName(body.getName());
+	this.setLevel(body.getLevel());
   }
 }
 

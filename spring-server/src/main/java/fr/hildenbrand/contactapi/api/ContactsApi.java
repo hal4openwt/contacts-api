@@ -6,7 +6,9 @@
 package fr.hildenbrand.contactapi.api;
 
 import fr.hildenbrand.contactapi.model.Contact;
+import fr.hildenbrand.contactapi.model.ContactBody;
 import fr.hildenbrand.contactapi.model.Skill;
+import fr.hildenbrand.contactapi.model.SkillBody;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -22,7 +24,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T12:44:06.373+01:00")
 
 @Api(value = "contacts", description = "the contacts API")
 public interface ContactsApi {
@@ -34,7 +36,7 @@ public interface ContactsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> addContact(@ApiParam(value = "Contact object that needs to be added" ,required=true )  @Valid @RequestBody Contact body);
+    ResponseEntity<Void> addContact(@ApiParam(value = "Contact object that needs to be added" ,required=true )  @Valid @RequestBody ContactBody body);
 
 
     @ApiOperation(value = "Adds a skill to a contact", nickname = "addSkillToContact", notes = "", tags={ "contacts", })
@@ -87,6 +89,6 @@ public interface ContactsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body);
+    ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody ContactBody body);
 
 }

@@ -3,7 +3,10 @@ package fr.hildenbrand.contactapi.api;
 import fr.hildenbrand.contactapi.dbaccess.ContactRepository;
 import fr.hildenbrand.contactapi.dbaccess.SkillRepository;
 import fr.hildenbrand.contactapi.model.Contact;
+import fr.hildenbrand.contactapi.model.ContactBody;
 import fr.hildenbrand.contactapi.model.Skill;
+import fr.hildenbrand.contactapi.model.SkillBody;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -49,10 +52,11 @@ public class ContactsApiController implements ContactsApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> addContact(@ApiParam(value = "Contact object that needs to be added" ,required=true )  @Valid @RequestBody Contact body) {
+    public ResponseEntity<Void> addContact(@ApiParam(value = "Contact object that needs to be added" ,required=true )  @Valid @RequestBody ContactBody body) {
         try {
-        	body.setId(null);
-        	contactRepository.save(body);
+        	Contact contact = new Contact();
+        	contact.copyBody(body);
+        	contactRepository.save(contact);
         	return new ResponseEntity<Void>(HttpStatus.CREATED);
         } 
         catch(Exception e) {
@@ -92,8 +96,10 @@ public class ContactsApiController implements ContactsApi {
     		if (contact==null)
     			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     		else {
-    			contactRepository.delete(contactId);
-    			return new ResponseEntity<Void>(HttpStatus.OK);
+    			contact.setSkills(Skill.emptySkillList);
+    			contactRepository.save(contact);
+        		contactRepository.delete(contactId);
+	    		return new ResponseEntity<Void>(HttpStatus.OK);
     		}
         } 
     	catch (Exception e) {
@@ -127,14 +133,14 @@ public class ContactsApiController implements ContactsApi {
     }
 
     @Transactional
-    public ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody Contact body) {
+    public ResponseEntity<Void> updateContact(@ApiParam(value = "ID of contact to return",required=true) @PathVariable("contactId") Long contactId,@ApiParam(value = "Contact object that needs to be updated" ,required=true )  @Valid @RequestBody ContactBody body) {
     	try {
     		Contact contact=contactRepository.findOne(contactId);
     		if (contact==null)
     			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     		else {
-    			contact.setId(contactId);
-    			contactRepository.save(body);
+    			contact.copyBody(body);
+    			contactRepository.save(contact);
     			return new ResponseEntity<Void>(HttpStatus.OK);
     		}
     	}

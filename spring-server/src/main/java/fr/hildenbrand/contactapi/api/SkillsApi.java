@@ -6,6 +6,7 @@
 package fr.hildenbrand.contactapi.api;
 
 import fr.hildenbrand.contactapi.model.Skill;
+import fr.hildenbrand.contactapi.model.SkillBody;
 import io.swagger.annotations.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -21,7 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.util.List;
-@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T11:20:11.645+01:00")
+@javax.annotation.Generated(value = "io.swagger.codegen.languages.SpringCodegen", date = "2020-01-08T12:44:06.373+01:00")
 
 @Api(value = "skills", description = "the skills API")
 public interface SkillsApi {
@@ -33,7 +34,7 @@ public interface SkillsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    ResponseEntity<Void> addSkill(@ApiParam(value = "Skill object that needs to be added" ,required=true )  @Valid @RequestBody Skill body);
+    ResponseEntity<Void> addSkill(@ApiParam(value = "Skill object that needs to be added" ,required=true )  @Valid @RequestBody SkillBody body);
 
 
     @ApiOperation(value = "Deletes a skill", nickname = "deleteSkill", notes = "", tags={ "skills", })
@@ -75,6 +76,6 @@ public interface SkillsApi {
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.PUT)
-    ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body);
+    ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody SkillBody body);
 
 }

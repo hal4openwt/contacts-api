@@ -3,6 +3,8 @@ package fr.hildenbrand.contactapi.api;
 import fr.hildenbrand.contactapi.dbaccess.SkillRepository;
 import fr.hildenbrand.contactapi.model.Contact;
 import fr.hildenbrand.contactapi.model.Skill;
+import fr.hildenbrand.contactapi.model.SkillBody;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -45,10 +47,11 @@ public class SkillsApiController implements SkillsApi {
         this.request = request;
     }
 
-    public ResponseEntity<Void> addSkill(@ApiParam(value = "Skill object that needs to be added" ,required=true )  @Valid @RequestBody Skill body) {
+    public ResponseEntity<Void> addSkill(@ApiParam(value = "Skill object that needs to be added" ,required=true )  @Valid @RequestBody SkillBody body) {
         try {
-        	body.setId(null);
-        	skillRepository.save(body);
+        	Skill skill = new Skill();
+        	skill.copyBody(body);
+        	skillRepository.save(skill);
         	return new ResponseEntity<Void>(HttpStatus.CREATED);
         }
         catch(Exception e) {
@@ -64,8 +67,13 @@ public class SkillsApiController implements SkillsApi {
         	if (skill==null)
         		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         	else {
-        		skillRepository.delete(skillId);
-        		return new ResponseEntity<Void>(HttpStatus.OK);
+        		if (skill.getContacts().size()>0) {
+        			return new ResponseEntity<Void>(HttpStatus.PRECONDITION_REQUIRED);
+        		}
+        		else {
+	        		skillRepository.delete(skillId);
+	        		return new ResponseEntity<Void>(HttpStatus.OK);
+        		}
         	}
         }
         catch(Exception e) {
@@ -101,14 +109,14 @@ public class SkillsApiController implements SkillsApi {
     }
 
     @Transactional
-    public ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody Skill body) {
+    public ResponseEntity<Void> updateSkill(@ApiParam(value = "ID of skill to return",required=true) @PathVariable("skillId") Long skillId,@ApiParam(value = "Skill that needs to be updated" ,required=true )  @Valid @RequestBody SkillBody body) {
     	try {
         	Skill skill = skillRepository.findOne(skillId);
         	if (skill==null)
         		return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         	else {
-        		body.setId(skillId);
-        		skillRepository.save(body);
+        		skill.copyBody(body);
+        		skillRepository.save(skill);
         		return new ResponseEntity<Void>(HttpStatus.OK);
         	}
         }
