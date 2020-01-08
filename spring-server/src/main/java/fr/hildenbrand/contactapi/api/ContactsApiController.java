@@ -133,10 +133,11 @@ public class ContactsApiController implements ContactsApi {
     		if (contact==null)
     			return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
     		else {
+    			contact.setId(contactId);
     			contactRepository.save(body);
     			return new ResponseEntity<Void>(HttpStatus.OK);
     		}
-    	} 
+    	}
     	catch(Exception e) {
     		log.error("Server exception: ", e);
     		return new ResponseEntity<Void>(HttpStatus.INTERNAL_SERVER_ERROR);

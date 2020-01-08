@@ -49,7 +49,7 @@ public class SkillsApiController implements SkillsApi {
         try {
         	body.setId(null);
         	skillRepository.save(body);
-        	return new ResponseEntity<Void>(HttpStatus.OK);
+        	return new ResponseEntity<Void>(HttpStatus.CREATED);
         }
         catch(Exception e) {
         	log.error("Server exception: ", e);
